@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.ssm.mapper.UserMapper">
+
+	<resultMap id="BaseResultMap" type="com.demo.ssm.pojo.User">
+		<id column="uid" property="uid" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="column_List">
+		id,username,password
+	</sql>
+
+	<select id="selectUsers" resultMap="BaseResultMap">
+		SELECT
+		<include refid="column_List" />
+		FROM sys_users
+	</select>
+
+	<update id="updateUserByName" parameterType="com.demo.ssm.pojo.User">
+		update sys_users set password=#{password} where username = #{username}
+	</update>
+
+	<insert id="addUser" parameterType="com.demo.ssm.pojo.User">
+		insert into sys_users (username,password) values (#{username},#{password})
+	</insert>
+
+	<select id="selectByName" resultType="Integer">
+		select count(*) from sys_users where username=#{username}
+	</select>
+
+
+</mapper>
